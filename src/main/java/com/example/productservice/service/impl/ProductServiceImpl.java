@@ -149,10 +149,11 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public PageResponse<ProductDTO> getAll(Integer page, Integer size,String shop, String search, String category) throws NotFoundException {
+    public PageResponse<ProductDTO> getAll(Integer page, Integer size, String shop, String search, String category) throws NotFoundException {
         Pageable pageable = PageUtil.getPage(page, size);
 
         ProductPredicate productPredicate = new ProductPredicate()
+                .shop(shop)
                 .category(category)
                 .search(search);
         Page<Product> products = productRepository.findAll(productPredicate.getCriteria(), pageable);

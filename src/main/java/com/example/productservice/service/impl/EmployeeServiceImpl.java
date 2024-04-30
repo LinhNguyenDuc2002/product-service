@@ -18,10 +18,10 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public void create(ActorRequest actorRequest) throws InvalidException {
         if (actorRequest == null ||
-                !StringUtils.hasText(actorRequest.getAccountId()) ||
-                !StringUtils.hasText(actorRequest.getFullname()) ||
-                !StringUtils.hasText(actorRequest.getEmail()) ||
-                !StringUtils.hasText(actorRequest.getPhone())) {
+            !StringUtils.hasText(actorRequest.getAccountId()) ||
+            !StringUtils.hasText(actorRequest.getFullname()) ||
+            !StringUtils.hasText(actorRequest.getEmail()) ||
+            !StringUtils.hasText(actorRequest.getPhone())) {
             throw new InvalidException(ExceptionMessage.ERROR_CUSTOMER_INVALID_INPUT);
         }
 

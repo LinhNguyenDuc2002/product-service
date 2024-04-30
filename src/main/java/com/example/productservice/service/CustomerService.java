@@ -11,8 +11,6 @@ import com.example.productservice.payload.response.PageResponse;
 public interface CustomerService {
     void create(ActorRequest actorRequest) throws InvalidException;
 
-    ShopDTO createShop(String id, ShopRequest shopRequest) throws InvalidException, NotFoundException;
-
     PageResponse<CustomerDTO> getAll(Integer page, Integer size);
 
     CustomerDTO get(String id) throws NotFoundException;

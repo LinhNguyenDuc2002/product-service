@@ -10,4 +10,5 @@ public final class ExceptionMessage {
     public final static String ERROR_CATEGORY_NOT_FOUND = "The request is invalid";
     public final static String ERROR_CUSTOMER_INVALID_INPUT = "";
     public final static String ERROR_CUSTOMER_NOT_FOUND = "";
+    public final static String ERROR_SHOP_NOT_FOUND = "";
 }

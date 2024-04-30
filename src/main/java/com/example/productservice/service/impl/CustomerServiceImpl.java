@@ -2,16 +2,12 @@ package com.example.productservice.service.impl;
 
 import com.example.productservice.constant.ExceptionMessage;
 import com.example.productservice.dto.CustomerDTO;
-import com.example.productservice.dto.ShopDTO;
-import com.example.productservice.entity.Address;
 import com.example.productservice.entity.Customer;
-import com.example.productservice.entity.Shop;
 import com.example.productservice.exception.InvalidException;
 import com.example.productservice.exception.NotFoundException;
 import com.example.productservice.mapper.CustomerMapper;
 import com.example.productservice.mapper.ShopMapper;
 import com.example.productservice.payload.ActorRequest;
-import com.example.productservice.payload.ShopRequest;
 import com.example.productservice.payload.response.PageResponse;
 import com.example.productservice.repository.CustomerRepository;
 import com.example.productservice.repository.ShopRepository;
@@ -61,27 +57,6 @@ public class CustomerServiceImpl implements CustomerService {
                 .build();
 
         customerRepository.save(customer);
-    }
-
-    @Override
-    public ShopDTO createShop(String id, ShopRequest shopRequest) throws InvalidException, NotFoundException {
-        Optional<Customer> check = customerRepository.findById(id);
-
-        if (!check.isPresent()) {
-            throw new NotFoundException(ExceptionMessage.ERROR_CUSTOMER_NOT_FOUND);
-        }
-
-        Customer customer = check.get();
-        Shop shop = Shop.builder()
-                .name(shopRequest.getName())
-                .hotline(shopRequest.getHotline())
-                .email(shopRequest.getEmail())
-                .address(Address.builder().build())
-                .customer(customer)
-                .build();
-
-        shopRepository.save(shop);
-        return shopMapper.toDto(shop);
     }
 
     @Override

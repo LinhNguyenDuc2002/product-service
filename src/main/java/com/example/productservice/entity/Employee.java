@@ -25,9 +25,6 @@ public class Employee extends Auditor {
     @Column(name = "fullname")
     private String fullname;
 
-    @Column(name = "position")
-    private String position;
-
     @Column(name = "email")
     private String email;
 

@@ -7,7 +7,7 @@ import com.example.productservice.exception.InvalidException;
 import com.example.productservice.exception.NotFoundException;
 import com.example.productservice.mapper.CustomerMapper;
 import com.example.productservice.mapper.ShopMapper;
-import com.example.productservice.payload.ActorRequest;
+import com.example.productservice.payload.CustomerRequest;
 import com.example.productservice.payload.response.PageResponse;
 import com.example.productservice.repository.CustomerRepository;
 import com.example.productservice.repository.ShopRepository;
@@ -36,27 +36,27 @@ public class CustomerServiceImpl implements CustomerService {
     private ShopMapper shopMapper;
 
     @Override
-    public void create(ActorRequest actorRequest) throws InvalidException {
-        if (actorRequest == null ||
-                !StringUtils.hasText(actorRequest.getAccountId()) ||
-                !StringUtils.hasText(actorRequest.getFullname()) ||
-                !StringUtils.hasText(actorRequest.getEmail()) ||
-                !StringUtils.hasText(actorRequest.getPhone())) {
+    public CustomerDTO create(CustomerRequest customerRequest) throws InvalidException {
+        if (customerRequest == null ||
+                !StringUtils.hasText(customerRequest.getAccountId()) ||
+                !StringUtils.hasText(customerRequest.getFullname()) ||
+                !StringUtils.hasText(customerRequest.getEmail()) ||
+                !StringUtils.hasText(customerRequest.getPhone())) {
             throw new InvalidException(ExceptionMessage.ERROR_CUSTOMER_INVALID_INPUT);
         }
 
-        if (!actorRequest.getRole().equals("CUSTOMER")) {
+        if (!customerRequest.getRole().equals("CUSTOMER")) {
             throw new InvalidException(ExceptionMessage.ERROR_CUSTOMER_INVALID_INPUT);
         }
 
         Customer customer = Customer.builder()
-                .accountId(actorRequest.getAccountId())
-                .fullname(actorRequest.getFullname())
-                .phone(actorRequest.getPhone())
-                .email(actorRequest.getEmail())
+                .accountId(customerRequest.getAccountId())
+                .fullname(customerRequest.getFullname())
+                .phone(customerRequest.getPhone())
+                .email(customerRequest.getEmail())
                 .build();
 
-        customerRepository.save(customer);
+        return customerMapper.toDto(customerRepository.save(customer));
     }
 
     @Override

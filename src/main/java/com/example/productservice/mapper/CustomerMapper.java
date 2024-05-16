@@ -8,11 +8,11 @@ import org.springframework.stereotype.Component;
 public class CustomerMapper extends AbstractMapper<Customer, CustomerDTO> {
     @Override
     public Class<CustomerDTO> getDtoClass() {
-        return null;
+        return CustomerDTO.class;
     }
 
     @Override
     public Class<Customer> getEntityClass() {
-        return null;
+        return Customer.class;
     }
 }

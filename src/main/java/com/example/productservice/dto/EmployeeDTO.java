@@ -1,32 +1,31 @@
-package com.example.productservice.payload;
+package com.example.productservice.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.PropertyNamingStrategies;
+import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Setter
 @Getter
+@Setter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class ActorRequest {
-    @JsonProperty("account")
+@JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
+public class EmployeeDTO {
+    private String id;
+
     private String accountId;
 
-    @JsonProperty("fullname")
     private String fullname;
 
-    @JsonProperty("email")
+    private String position;
+
     private String email;
 
-    @JsonProperty("phone")
     private String phone;
-
-    @JsonProperty("role")
-    private String role;
 }

@@ -1,9 +1,11 @@
 package com.example.productservice.service.impl;
 
 import com.example.productservice.constant.ExceptionMessage;
+import com.example.productservice.dto.EmployeeDTO;
 import com.example.productservice.entity.Employee;
 import com.example.productservice.exception.InvalidException;
-import com.example.productservice.payload.ActorRequest;
+import com.example.productservice.mapper.EmployeeMapper;
+import com.example.productservice.payload.CustomerRequest;
 import com.example.productservice.repository.EmployeeRepository;
 import com.example.productservice.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,27 +17,30 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Autowired
     private EmployeeRepository employeeRepository;
 
+    @Autowired
+    private EmployeeMapper employeeMapper;
+
     @Override
-    public void create(ActorRequest actorRequest) throws InvalidException {
-        if (actorRequest == null ||
-            !StringUtils.hasText(actorRequest.getAccountId()) ||
-            !StringUtils.hasText(actorRequest.getFullname()) ||
-            !StringUtils.hasText(actorRequest.getEmail()) ||
-            !StringUtils.hasText(actorRequest.getPhone())) {
+    public EmployeeDTO create(CustomerRequest customerRequest) throws InvalidException {
+        if (customerRequest == null ||
+            !StringUtils.hasText(customerRequest.getAccountId()) ||
+            !StringUtils.hasText(customerRequest.getFullname()) ||
+            !StringUtils.hasText(customerRequest.getEmail()) ||
+            !StringUtils.hasText(customerRequest.getPhone())) {
             throw new InvalidException(ExceptionMessage.ERROR_CUSTOMER_INVALID_INPUT);
         }
 
-        if (!actorRequest.getRole().equals("EMPLOYEE")) {
+        if (!customerRequest.getRole().equals("EMPLOYEE")) {
             throw new InvalidException(ExceptionMessage.ERROR_CUSTOMER_INVALID_INPUT);
         }
 
         Employee employee = Employee.builder()
-                .accountId(actorRequest.getAccountId())
-                .fullname(actorRequest.getFullname())
-                .phone(actorRequest.getPhone())
-                .email(actorRequest.getEmail())
+                .accountId(customerRequest.getAccountId())
+                .fullname(customerRequest.getFullname())
+                .phone(customerRequest.getPhone())
+                .email(customerRequest.getEmail())
                 .build();
 
-        employeeRepository.save(employee);
+        return employeeMapper.toDto(employeeRepository.save(employee));
     }
 }

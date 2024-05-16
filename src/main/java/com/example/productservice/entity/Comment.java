@@ -8,6 +8,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -36,15 +37,13 @@ public class Comment extends Auditor{
     @OneToMany(mappedBy = "comment", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Collection<Image> images;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "shop_id")
-    @EqualsAndHashCode.Exclude
-    private Shop shop;
+    @Column(name = "allow_edit")
+    private boolean allowEdit;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "customer_id")
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "detail_id")
     @EqualsAndHashCode.Exclude
-    private Customer customer;
+    private Detail detail;
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name = "product_id")

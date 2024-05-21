@@ -11,12 +11,15 @@ import com.example.productservice.util.ResponseUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 @RequestMapping("/comment")
 @RestController
@@ -28,6 +31,11 @@ public class CommentController {
             @PathVariable String id,
             @RequestBody CommentRequest commentRequest) throws NotFoundException, InvalidException {
         return ResponseUtil.wrapResponse(commentService.create(id, commentRequest), ResponseMessage.CREATE_COMMENT_SUCCESS);
+    }
+
+    @GetMapping("/product/{id}")
+    public ResponseEntity<CommonResponse<List<CommentDTO>>> get(@PathVariable String id) throws NotFoundException {
+        return ResponseUtil.wrapResponse(commentService.get(id), ResponseMessage.GET_COMMENT_SUCCESS);
     }
 
     @PutMapping("/{id}")

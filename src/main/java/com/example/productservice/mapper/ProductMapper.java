@@ -11,8 +11,11 @@ public class ProductMapper extends AbstractMapper<Product, ProductDTO> {
     public ProductDTO toDto(Product product) {
         ProductDTO productDTO = super.toDto(product);
 
+        if(!product.getImages().isEmpty()) {
+            productDTO.setImages(product.getImages().stream().map(Image::getUrl).toList());
+        }
         productDTO.setCategory(product.getCategory().getName());
-        productDTO.setImages(product.getImages().stream().map(Image::getId).toList());
+
         return productDTO;
     }
     @Override

@@ -50,6 +50,16 @@ public class ShopServiceImpl implements ShopService {
     }
 
     @Override
+    public ShopDTO get(String id) throws NotFoundException {
+        Shop shop = shopRepository.findById(id)
+                .orElseThrow(() -> {
+                    return new NotFoundException(ExceptionMessage.ERROR_SHOP_NOT_FOUND);
+                });
+
+        return shopMapper.toDto(shop);
+    }
+
+    @Override
     public ShopDTO update(String id, ShopRequest shopRequest) throws NotFoundException {
         Shop shop = shopRepository.findById(id)
                 .orElseThrow(() -> {

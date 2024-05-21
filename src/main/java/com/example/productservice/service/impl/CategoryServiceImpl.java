@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -46,7 +47,7 @@ public class CategoryServiceImpl implements CategoryService {
             throw new NotFoundException(ExceptionMessage.ERROR_CATEGORY_NOT_FOUND);
         }
 
-        if (categoryRequest == null || StringUtils.hasText(categoryRequest.getName())) {
+        if (categoryRequest == null || !StringUtils.hasText(categoryRequest.getName())) {
             throw new InvalidException(ExceptionMessage.ERROR_PRODUCT_INVALID_INPUT);
         }
 
@@ -56,6 +57,12 @@ public class CategoryServiceImpl implements CategoryService {
         categoryRepository.save(category);
 
         return categoryMapper.toDto(category);
+    }
+
+    @Override
+    public List<CategoryDTO> getAll() {
+        List<Category> categories = categoryRepository.findAll();
+        return categoryMapper.toDtoList(categories);
     }
 
     @Override

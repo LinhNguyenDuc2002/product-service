@@ -9,6 +9,7 @@ import com.example.productservice.service.ShopService;
 import com.example.productservice.util.ResponseUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -27,6 +28,11 @@ public class ShopController {
             @PathVariable String id,
             @RequestBody ShopRequest shopRequest) throws InvalidException, NotFoundException {
         return ResponseUtil.wrapResponse(shopService.create(id, shopRequest));
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<CommonResponse<ShopDTO>> create(@PathVariable String id) throws NotFoundException {
+        return ResponseUtil.wrapResponse(shopService.get(id));
     }
 
     @PutMapping("/{id}")

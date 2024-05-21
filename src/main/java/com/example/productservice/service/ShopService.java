@@ -8,5 +8,7 @@ import com.example.productservice.payload.ShopRequest;
 public interface ShopService {
     ShopDTO create(String id, ShopRequest shopRequest) throws InvalidException, NotFoundException;
 
+    ShopDTO get(String id) throws NotFoundException;
+
     ShopDTO update(String id, ShopRequest shopRequest) throws NotFoundException;
 }

@@ -28,3 +28,8 @@ cloudinary:
   cloudName:
   apiKey:
   apiSecret:
+
+# JWT
+access-token:
+  private: keypair/access-token-private.key
+  public: keypair/access-token-public.key

@@ -74,6 +74,7 @@ public class BillServiceImpl implements BillService {
 
         Bill bill = Bill.builder()
                 .phone(billRequest.getPhone())
+                .status(BillStatus.PROCESSING)
                 .address(Address.builder()
                         .country(billRequest.getAddress().getCountry())
                         .city(billRequest.getAddress().getCity())

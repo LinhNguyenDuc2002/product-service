@@ -133,11 +133,11 @@ public class ProductServiceImpl implements ProductService {
                         throw new RuntimeException(e);
                     }
                 });
-                imageRepository.deleteAll(images);
+                imageRepository.deleteAllInBatch(images);
 
                 List<Image> imageFiles = uploadFile(files);
                 imageFiles.stream().forEach(image -> image.setProduct(product));
-                imageRepository.saveAll(imageFiles);
+                product.setImages(imageFiles);
             }
 
             productRepository.save(product);

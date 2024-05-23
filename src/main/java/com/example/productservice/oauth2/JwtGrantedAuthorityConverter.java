@@ -29,7 +29,7 @@ public class JwtGrantedAuthorityConverter implements Converter<Jwt, Collection<G
         if (source.hasClaim(SecurityConstant.TOKEN_CLAIM_ROLE)) {
             List<String> roleClaims = source.getClaim(SecurityConstant.TOKEN_CLAIM_ROLE);
             for (String p : roleClaims) {
-                authorities.add(new SimpleGrantedAuthority(String.valueOf(p)));
+                authorities.add(new SimpleGrantedAuthority("ROLE_" + p));
             }
         }
 

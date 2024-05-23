@@ -12,6 +12,7 @@ import com.example.productservice.service.BillService;
 import com.example.productservice.util.ResponseUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -44,6 +45,7 @@ public class BillController {
     }
 
     @GetMapping
+    @PreAuthorize("hasAnyRole('ADMIN', 'EMPLOYEE')")
     public ResponseEntity<PageResponse<BillDTO>> getAll(
             @RequestParam(name = ParameterConstant.Page.PAGE, defaultValue = ParameterConstant.Page.DEFAULT_PAGE) Integer page,
             @RequestParam(name = ParameterConstant.Page.SIZE, defaultValue = ParameterConstant.Page.DEFAULT_SIZE) Integer size,
@@ -66,6 +68,7 @@ public class BillController {
     }
 
     @PatchMapping("/{id}")
+    @PreAuthorize("hasAnyRole('EMPLOYEE')")
     public ResponseEntity<CommonResponse<BillDTO>> changeStatus(
             @PathVariable String id,
             @RequestParam(name = "status") String status) throws NotFoundException, InvalidException {

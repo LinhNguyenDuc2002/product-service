@@ -9,6 +9,7 @@ import com.example.productservice.service.CategoryService;
 import com.example.productservice.util.ResponseUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -27,11 +28,13 @@ public class CategoryController {
     private CategoryService categoryService;
 
     @PostMapping
+    @PreAuthorize("hasAnyRole('ADMIN')")
     public ResponseEntity<CommonResponse<CategoryDTO>> add(@RequestBody CategoryRequest categoryRequest) throws InvalidException {
         return ResponseUtil.wrapResponse(categoryService.add(categoryRequest));
     }
 
     @PutMapping("/{id}")
+    @PreAuthorize("hasAnyRole('ADMIN')")
     public ResponseEntity<CommonResponse<CategoryDTO>> update(@PathVariable String id, @RequestBody CategoryRequest categoryRequest) throws InvalidException, NotFoundException {
         return ResponseUtil.wrapResponse(categoryService.update(id, categoryRequest));
     }
@@ -42,6 +45,7 @@ public class CategoryController {
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasAnyRole('ADMIN')")
     public ResponseEntity<CommonResponse<Void>> delete(@PathVariable String id) throws NotFoundException {
         categoryService.delete(id);
         return ResponseUtil.wrapResponse(null);

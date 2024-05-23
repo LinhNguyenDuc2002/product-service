@@ -11,6 +11,7 @@ import com.example.productservice.util.ResponseUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -30,6 +31,7 @@ public class ProductController {
     private ProductService productService;
 
     @PostMapping(value = "", consumes = { MediaType.MULTIPART_FORM_DATA_VALUE })
+    @PreAuthorize("hasAnyRole('ADMIN')")
     public ResponseEntity<CommonResponse<ProductDTO>> add(
             @RequestParam("images") List<MultipartFile> files,
             @RequestParam("product") String productRequest) throws InvalidException, NotFoundException {
@@ -37,6 +39,7 @@ public class ProductController {
     }
 
     @PutMapping(value = "/{id}", consumes = { MediaType.MULTIPART_FORM_DATA_VALUE })
+    @PreAuthorize("hasAnyRole('ADMIN')")
     public ResponseEntity<CommonResponse<ProductDTO>> update(
             @PathVariable String id,
             @RequestParam("images") List<MultipartFile> files,
@@ -60,6 +63,7 @@ public class ProductController {
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasAnyRole('ADMIN')")
     public ResponseEntity<CommonResponse<Void>> delete(@PathVariable String id) throws NotFoundException {
         productService.delete(id);
         return ResponseUtil.wrapResponse(null);
